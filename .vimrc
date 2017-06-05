@@ -18,15 +18,28 @@ call dein#add('Shougo/neocomplete.vim')
 
 "githubのリポジトリ名を打ち込む
 "call dein#add('thica/vim-quickrun')
+"emmet(zen-coding)を使う.
 call dein#add('mattn/emmet-vim')
-"vimからファイルを開くためのプラグイン.
+"vimからファイルを開く
 call dein#add('scrooloose/nerdtree')
-call dein#add('tpope/vim-rails')
+"def,ifの後に自動でendを入れてくれる.
 call dein#add('tpope/vim-endwise')
-call dein#add('nathanaelkane/vim-indent-guides')
-"vimでfishシェルを使えるようにするプラグイン.
-call dein#add('dag/vim-fish')
-
+"vimでfishシェルを使えるようにする.
+"call dein#add('dag/vim-fish')
+"インデントの深さを視覚的にわかりやすくする.
+call dein#add('Yggdroot/indentLine')
+"自動補完プラグイン
+call dein#add('Shougo/neocomplete.vim')
+"スニペット機能を提供します。
+call dein#add('Shougo/neosnippet.vim')
+"neosnippet.vimのためのスニペット集です.
+call dein#add('Shougo/neosnippet-snippets')
+"ファイルに変更が加わった際に、NERDtreeのツリーに変更を示すアイコンを表示します。
+call dein#add('Xuyuanp/nerdtree-git-plugin')
+"AtomのOne Darkを再現するためのカラースキーマです。
+call dein#add('joshdick/onedark.vim')
+":Mkdir,:Touchなどのこまんどがvimで使えるようになる。
+call dein#add('b4b4r07/vim-shellutils')
 
 call dein#end()
 
@@ -87,8 +100,23 @@ imap< <><LEFT>
 
 """"Ctrl+eによりNERDTreeを開くことが可能。
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
-""""タブ幅を４にする。
-set tabstop=4
-set shiftwidth=4
-""""ESCをjjに割り当てる。
+""""タブ幅を２にする。
+set tabstop=2
+set shiftwidth=2
+""""jjでescモードにはいる.
 inoremap <silent> jj <ESC>
+""""fishシェル使用したらバグがいろいろ発生したので下の文を書いてログインシェルをバッシュにしてバグを回避してみる
+set shell=/bin/bash
+""""行番号を追加する
+set number
+""""joshdick/onedark.vimのための設定の行
+if (has("autocmd") && !has("gui_running"))
+	  let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+		  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
+		end
+let g:onedark_termcolors=16
+colorscheme onedark
+""""vimを開いた時何もファイルを開いてなければ自動的にNERDTreeが開く
+autocmd vimenter * NERDTree
+"neocompleteのための行。ジドウホカンヲジッソウスル
+let g:neocomplete#enable_at_startup = 1
