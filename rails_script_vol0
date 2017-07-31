@@ -1,0 +1,4 @@
+puts '作りたいプロジェクトの名前を入力してください。'
+name = gets
+p '#{name}'
+system ('rails new #{name}')
